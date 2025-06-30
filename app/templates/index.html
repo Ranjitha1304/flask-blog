@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Home - Flask Blog{% endblock %}
+{% block content %}
+<h2>Recent Posts</h2>
+
+<form method="get" class="search-form">
+    <input type="text" name="search" placeholder="Search posts..." value="{{ request.args.get('search', '') }}">
+    <button type="submit">Search</button>
+</form>
+
+{% for post in posts.items %}
+    <div class="post-card">
+        <h3><a href="{{ url_for('main.post_detail', post_id=post.id) }}">{{ post.title }}</a></h3>
+        <p>By {{ post.author.username }} in {{ post.category.name if post.category else "Uncategorized" }}</p>
+        <p>{{ post.content[:150] }}...</p>
+        <p>Tags:
+            {% for tag in post.tags %}
+                <a href="{{ url_for('main.index', tag=tag.name) }}">{{ tag.name }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+{% else %}
+    <p>No posts found.</p>
+{% endfor %}
+
+<div class="pagination">
+    {% if posts.has_prev %}
+        <a href="{{ url_for('main.index', page=posts.prev_num) }}">&laquo; Prev</a>
+    {% endif %}
+    <span>Page {{ posts.page }} of {{ posts.pages }}</span>
+    {% if posts.has_next %}
+        <a href="{{ url_for('main.index', page=posts.next_num) }}">Next &raquo;</a>
+    {% endif %}
+</div>
+{% endblock %}

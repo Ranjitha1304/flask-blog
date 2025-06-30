@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0 20px;
+    background: #f6f6f6;
+    color: #333;
+}
+
+header, footer {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+header h1, header nav a {
+    display: inline-block;
+    margin-right: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    margin: 20px 0;
+}
+
+.post-card, .comment {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.flash {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.flash.success { background: #c8e6c9; }
+.flash.info { background: #bbdefb; }
+.flash.danger { background: #ffcdd2; }
+
+.pagination a {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 0 2px;
+    text-decoration: none;
+}

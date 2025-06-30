@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Moderate Comments{% endblock %}
+{% block content %}
+<h2>Comment Moderation</h2>
+{% for comment in comments %}
+    <div class="comment">
+        <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+        {% if not comment.approved %}
+            <a href="{{ url_for('main.approve_comment', comment_id=comment.id) }}">Approve</a>
+        {% endif %}
+        <a href="{{ url_for('main.delete_comment', comment_id=comment.id) }}">Delete</a>
+    </div>
+{% else %}
+    <p>No comments.</p>
+{% endfor %}
+{% endblock %}

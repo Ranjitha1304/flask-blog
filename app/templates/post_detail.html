@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+<h2>{{ post.title }}</h2>
+<p>By {{ post.author.username }} | Category: {{ post.category.name if post.category else "Uncategorized" }}</p>
+<p>{{ post.content }}</p>
+
+{% if current_user.is_authenticated and (current_user == post.author or current_user.role == 'admin') %}
+    <a href="{{ url_for('main.edit_post', post_id=post.id) }}">Edit</a>
+    <a href="{{ url_for('main.delete_post', post_id=post.id) }}">Delete</a>
+{% endif %}
+
+<h3>Comments</h3>
+{% for comment in comments %}
+    <div class="comment">
+        <strong>{{ comment.user.username }}</strong>: {{ comment.content }}
+    </div>
+{% else %}
+    <p>No comments yet.</p>
+{% endfor %}
+
+{% if current_user.is_authenticated %}
+    <form method="POST" action="{{ url_for('main.comment_post', post_id=post.id) }}">
+        {{ form.hidden_tag() }}
+        {{ form.content.label }} {{ form.content(rows=3) }}<br>
+        {{ form.submit() }}
+    </form>
+{% else %}
+    <p><a href="{{ url_for('main.login') }}">Login</a> to comment.</p>
+{% endif %}
+{% endblock %}
